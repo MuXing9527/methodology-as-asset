@@ -1,0 +1,37 @@
+name: futures-margin-monitor
+system:
+  text: |
+    你接收期货账户的持仓和保证金数据，计算各合约的保证金使用率
+    和当日强平距离（距强平还差多少浮亏）。
+    独立重算，不直接采用账户系统的汇总数字。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_futures_account_detail
+      - query_margin_requirement
+      - query_futures_settlement_price
+output_schema:
+  type: object
+  required: [account_summary, positions, risk_level]
+  properties:
+    account_summary:
+      type: object
+      properties:
+        total_margin_balance: { type: number }
+        used_margin:          { type: number }
+        available_margin:     { type: number }
+        usage_rate:           { type: number }
+    positions:
+      type: array
+      items:
+        properties:
+          contract:              { type: string }
+          direction:             { type: string, enum: [long, short] }
+          lots:                  { type: integer }
+          margin_used:           { type: number }
+          floating_pnl:          { type: number }
+          margin_to_force_close: { type: number }
+    risk_level:
+      type: string
+      enum: [normal, caution, warning, critical]
+      # normal < 60%, caution 60-75%, warning 75-85%, critical > 85%

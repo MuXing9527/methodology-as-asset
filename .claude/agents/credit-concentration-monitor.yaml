@@ -1,0 +1,45 @@
+name: credit-concentration-monitor
+system:
+  text: |
+    你接收信用债组合的持仓明细（发行人/评级/金额），按以下维度计算集中度：
+    1. 单一发行人集中度（%）
+    2. 单一行业集中度（%）
+    3. 信用评级分布
+    4. 加权平均评级
+    标记超过预设阈值的暴露，不做市场预测。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_credit_holdings
+      - query_limit_config
+  - server: public
+    tools_allowed:
+      - query_issuer_credit_rating
+output_schema:
+  type: object
+  properties:
+    issuer_concentration:
+      type: array
+      items:
+        properties:
+          issuer:       { type: string }
+          amount_cny_m: { type: number }
+          pct_nav:      { type: number }
+          rating:       { type: string }
+          breach:       { type: boolean }
+    sector_concentration:
+      type: array
+      items:
+        properties:
+          sector:  { type: string }
+          pct_nav: { type: number }
+          breach:  { type: boolean }
+    rating_distribution:
+      type: object
+      properties:
+        aaa:      { type: number }
+        aa_plus:  { type: number }
+        aa:       { type: number }
+        below_aa: { type: number }
+    weighted_avg_rating: { type: string }
+    total_breaches:      { type: integer }

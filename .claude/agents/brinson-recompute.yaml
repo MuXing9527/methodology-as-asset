@@ -1,0 +1,45 @@
+name: brinson-recompute
+system:
+  text: |
+    你接收权益组合的逐日持仓权重和收益序列，以及基准成分权重和收益，
+    从底层数据独立重算 Brinson 三效应（配置效应 / 选股效应 / 交叉效应）。
+    不使用绩效归因系统的汇总数字，必须从明细数据推算。
+    输出重算结果，供与系统数字对比（Independent Recompute 验证）。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_portfolio_holdings_daily
+      - query_portfolio_returns_daily
+  - server: public
+    tools_allowed:
+      - query_index_constituent_weights
+      - query_index_constituent_returns
+output_schema:
+  type: object
+  required: [period, recomputed_attribution, verification]
+  properties:
+    period:
+      type: object
+      properties:
+        start_date: { type: string }
+        end_date:   { type: string }
+    recomputed_attribution:
+      type: object
+      properties:
+        allocation_effect_bp:  { type: number }
+        selection_effect_bp:   { type: number }
+        interaction_effect_bp: { type: number }
+        total_excess_return_bp: { type: number }
+    sector_breakdown:
+      type: array
+      items:
+        properties:
+          sector:            { type: string }
+          allocation_bp:     { type: number }
+          selection_bp:      { type: number }
+          interaction_bp:    { type: number }
+    verification:
+      type: object
+      properties:
+        sum_check_pass: { type: boolean }
+        sum_delta_bp:   { type: number }

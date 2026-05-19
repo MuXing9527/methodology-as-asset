@@ -1,0 +1,31 @@
+name: equity-sector-monitor
+system:
+  text: |
+    你接收权益组合持仓（股票列表 + 权重），按 WIND/CICS 一级行业分类
+    计算各行业权重，对比基准权重，输出超配/低配分析和主动偏离。
+    不做选股质量判断，只输出权重分布数字。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_holdings_with_weights
+  - server: public
+    tools_allowed:
+      - query_stock_sector_mapping
+      - query_benchmark_sector_weights
+output_schema:
+  type: object
+  properties:
+    benchmark: { type: string }
+    sectors:
+      type: array
+      items:
+        type: object
+        required: [sector, portfolio_weight, benchmark_weight, active_weight]
+        additionalProperties: false
+        properties:
+          sector:           { type: string }
+          portfolio_weight: { type: number }
+          benchmark_weight: { type: number }
+          active_weight:    { type: number }
+          breach:           { type: boolean }
+    total_active_risk_concentration: { type: number }

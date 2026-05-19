@@ -1,0 +1,32 @@
+name: position-limit-monitor
+system:
+  text: |
+    你接收组合当前持仓，对照机构风控系统中的仓位限额配置，逐条检查是否超限。
+    只报告超限状态，不做交易建议。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_portfolio_holdings_with_weights
+      - query_limit_config
+output_schema:
+  type: object
+  required: [total_breaches, breaches, all_pass]
+  properties:
+    all_pass:
+      type: boolean
+    total_breaches:
+      type: integer
+    breaches:
+      type: array
+      items:
+        type: object
+        required: [rule_id, rule_description, current_value, limit_value, breach_amount]
+        properties:
+          rule_id:          { type: string }
+          rule_description: { type: string }
+          current_value:    { type: number }
+          limit_value:      { type: number }
+          breach_amount:    { type: number }
+          severity:
+            type: string
+            enum: [yellow, red]

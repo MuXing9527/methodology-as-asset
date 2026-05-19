@@ -1,0 +1,35 @@
+name: var-monitor
+system:
+  text: |
+    你接收组合持仓和历史收益序列，使用历史模拟法计算 VaR 和 ES。
+    必须从底层持仓数据独立重算，不直接消费风控系统的汇总 VaR 数字。
+    输出 recomputed_var 和 recomputed_es，供与风控系统对比验证。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_portfolio_holdings_with_weights
+      - query_historical_returns
+      - query_reported_var
+output_schema:
+  type: object
+  required: [var_result, es_result, verification]
+  properties:
+    var_result:
+      type: object
+      properties:
+        confidence_level:       { type: number }
+        horizon_days:           { type: integer }
+        recomputed_var_pct:     { type: number }
+        reported_var_pct:       { type: number }
+        delta_pct:              { type: number }
+        breach_limit:           { type: boolean }
+    es_result:
+      type: object
+      properties:
+        recomputed_es_pct:      { type: number }
+        breach_limit:           { type: boolean }
+    verification:
+      type: object
+      properties:
+        recompute_pass: { type: boolean }
+        max_delta_allowed_pct: { type: number }

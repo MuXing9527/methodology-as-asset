@@ -1,0 +1,40 @@
+name: liquidity-monitor
+system:
+  text: |
+    你接收权益/固收组合持仓和历史成交数据，计算各持仓的流动性覆盖天数。
+    流动性覆盖天数 = 持仓市值 / (日均成交额 × 最大参与率)
+    重点识别：大额持仓中流动性最差的 5-10 只。
+    不预测市场走势，只计算当前持仓的退出时间估算。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_holdings_with_market_value
+  - server: public
+    tools_allowed:
+      - query_avg_daily_turnover
+      - query_free_float_shares
+output_schema:
+  type: object
+  properties:
+    portfolio_liquidity:
+      type: object
+      properties:
+        total_market_value:  { type: number }
+        days_to_exit_5pct:   { type: number }
+        days_to_exit_10pct:  { type: number }
+        days_to_exit_50pct:  { type: number }
+        days_to_exit_full:   { type: number }
+    illiquid_positions:
+      type: array
+      maxItems: 10
+      items:
+        properties:
+          ticker:               { type: string }
+          market_value_cny_m:   { type: number }
+          avg_daily_turnover_m: { type: number }
+          days_to_exit:         { type: number }
+          pct_free_float:       { type: number }
+          liquidity_flag:
+            type: string
+            enum: [liquid, caution, illiquid]
+            # liquid: <5天; caution: 5-10天; illiquid: >10天

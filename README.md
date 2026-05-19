@@ -4,7 +4,7 @@
 
 ## 这个 repo 是什么
 
-教程 27 章 + Part 5 序章里所有 CLAUDE.md / Skill / Subagent / Command / Hook 的 **结构骨架**——按 5 层架构组织，方便研究员开新项目时直接 clone 改名上手。
+教程 42 章 + 2 篇序章里所有 CLAUDE.md / Skill / Subagent / Command / Hook 的 **结构骨架**——按 5 层架构组织，方便研究员开新项目时直接 clone 改名上手。
 
 ## 这个 repo 不是什么
 
@@ -33,7 +33,28 @@ methodology-as-asset/
 │   │   ├── macro.md                           # Ch23 宏观数据点评入口
 │   │   ├── policy.md                          # Ch23 政策文件解读入口
 │   │   ├── event.md                           # Ch24 事件快评入口
-│   │   └── debate.md                          # Ch25 投委会预演入口
+│   │   ├── debate.md                          # Ch25 投委会预演入口
+│   │   ├── earningspreview.md                 # Ch26 财报预览入口
+│   │   ├── modelupdate.md                     # Ch26 模型更新入口
+│   │   ├── excelmodel.md                      # Ch27 Excel 建模入口
+│   │   ├── thesis.md                          # Ch28 thesis 追踪入口
+│   │   ├── portfolio.md                       # Ch28 持仓监测入口
+│   │   ├── catalyst.md                        # Ch28 催化剂日历入口
+│   │   ├── morningnote.md                     # Ch29 晨报入口
+│   │   ├── ideas.md                           # Ch29 选股池入口
+│   │   ├── ic.md                              # Ch30 首次覆盖入口
+│   │   ├── dd.md                              # Ch31 尽调入口
+│   │   ├── icmemo.md                          # Ch32 投委会 Memo 入口
+│   │   ├── attribution.md                     # Ch33 业绩归因入口
+│   │   ├── report.md                          # Ch34 客户报告入口
+│   │   ├── dailyrisk.md                       # Ch37 每日风险包入口
+│   │   ├── diagnosis.md                       # Ch38 回撤诊断入口
+│   │   ├── stress.md                          # Ch38 压力测试入口
+│   │   ├── dv01check.md                       # Ch39 DV01 限额检查
+│   │   ├── creditcheck.md                     # Ch39 信用集中度检查
+│   │   ├── sectorcheck.md                     # Ch40 行业敞口检查
+│   │   ├── margincheck.md                     # Ch40 期货保证金检查
+│   │   └── liquidity.md                       # Ch41 流动性监测入口
 │   ├── skills/
 │   │   ├── earnings-note-cn/SKILL.md          # Ch18
 │   │   ├── meeting-minutes-analyzer/SKILL.md  # Ch17
@@ -44,7 +65,31 @@ methodology-as-asset/
 │   │   ├── macro-release-analyzer/SKILL.md    # Ch23
 │   │   ├── policy-doc-analyzer/SKILL.md       # Ch23
 │   │   ├── event-quick-comment/SKILL.md       # Ch24
-│   │   └── thesis-debate/SKILL.md             # Ch25
+│   │   ├── thesis-debate/SKILL.md             # Ch25
+│   │   ├── earnings-preview/SKILL.md          # Ch26
+│   │   ├── model-update/SKILL.md              # Ch26
+│   │   ├── 3-statement-model/SKILL.md         # Ch27
+│   │   ├── dcf-model/SKILL.md                 # Ch27
+│   │   ├── thesis-tracker/SKILL.md            # Ch28
+│   │   ├── portfolio-monitoring/SKILL.md      # Ch28
+│   │   ├── catalyst-calendar/SKILL.md         # Ch28
+│   │   ├── morning-note/SKILL.md              # Ch29
+│   │   ├── idea-generation/SKILL.md           # Ch29
+│   │   ├── initiating-coverage/SKILL.md       # Ch30
+│   │   ├── dd-checklist/SKILL.md              # Ch31
+│   │   ├── dd-meeting-prep/SKILL.md           # Ch31
+│   │   ├── unit-economics/SKILL.md            # Ch31
+│   │   ├── ic-memo/SKILL.md                   # Ch32
+│   │   ├── brinson-attribution/SKILL.md       # Ch33
+│   │   ├── client-report/SKILL.md             # Ch34
+│   │   ├── daily-risk-pack/SKILL.md           # Ch37
+│   │   ├── drawdown-diagnosis/SKILL.md        # Ch38
+│   │   ├── stress-test/SKILL.md               # Ch38
+│   │   ├── dv01-limit-monitor/SKILL.md        # Ch39
+│   │   ├── credit-risk-monitor/SKILL.md       # Ch39
+│   │   ├── equity-sector-limit/SKILL.md       # Ch40
+│   │   ├── futures-margin-check/SKILL.md      # Ch40
+│   │   └── liquidity-risk-monitor/SKILL.md    # Ch41
 │   ├── agents/
 │   │   ├── financial-reader.yaml              # Ch18 / Ch11 教学样例
 │   │   ├── cn-meeting-minutes-reader.yaml     # Ch17
@@ -61,16 +106,24 @@ methodology-as-asset/
 │   │   ├── fed-event-reader.yaml              # Ch24 FOMC reader 示例
 │   │   ├── bull-case-agent.yaml               # Ch25 多头立场
 │   │   ├── bear-case-agent.yaml               # Ch25 空头立场
-│   │   └── devil-advocate-agent.yaml          # Ch25 5 估值误区核对
+│   │   ├── devil-advocate-agent.yaml          # Ch25 5 估值误区核对
+│   │   ├── brinson-recompute.yaml             # Ch33 Independent Recompute
+│   │   ├── var-monitor.yaml                   # Ch37 VaR 独立重算
+│   │   ├── drawdown-monitor.yaml              # Ch37 回撤监测
+│   │   ├── position-limit-monitor.yaml        # Ch37 仓位限额
+│   │   ├── credit-concentration-monitor.yaml  # Ch39 信用集中度
+│   │   ├── equity-sector-monitor.yaml         # Ch40 行业敞口
+│   │   ├── futures-margin-monitor.yaml        # Ch40 期货保证金
+│   │   └── liquidity-monitor.yaml             # Ch41 流动性覆盖天数
 │   └── hooks/
-│       ├── check.py                           # Ch26 PreToolUse
-│       ├── stop_check.py                      # Ch26 Stop
-│       └── audit_log.py                       # Ch27 可选
+│       ├── check.py                           # Ch35 PreToolUse
+│       ├── stop_check.py                      # Ch35 Stop
+│       └── audit_log.py                       # Ch35 可选
 ├── docs/
-│   ├── ONBOARDING.md                          # 新研究员入职流程（Ch27）
-│   └── SKILL_VERSIONING.md                    # Skill 版本管理规范（Ch27）
+│   ├── ONBOARDING.md                          # 新研究员入职流程（Ch36）
+│   └── SKILL_VERSIONING.md                    # Skill 版本管理规范（Ch36）
 ├── tests/
-│   └── hooks/test_check.py                    # Ch26 hook 单测
+│   └── hooks/test_check.py                    # Ch35 hook 单测
 └── output/                                    # .gitignore 默认包含
     └── （研究员产出落地目录）
 ```
@@ -86,7 +139,7 @@ methodology-as-asset/
 
 ### 团队推广
 
-Ch27 模式 A（Cowork）的最小落地形态——团队 git 仓库就是这个 repo 的 fork，每个研究员本地 `git pull` 即同步最新 Skill。
+Ch36 模式 A（Cowork）的最小落地形态——团队 git 仓库就是这个 repo 的 fork，每个研究员本地 `git pull` 即同步最新 Skill。
 
 参见 [`docs/ONBOARDING.md`](docs/ONBOARDING.md) 与 [`docs/SKILL_VERSIONING.md`](docs/SKILL_VERSIONING.md)。
 

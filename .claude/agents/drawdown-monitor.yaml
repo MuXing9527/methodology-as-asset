@@ -1,0 +1,31 @@
+name: drawdown-monitor
+system:
+  text: |
+    你接收组合净值序列，计算最大回撤（MDD）、当前回撤幅度、回撤持续时间。
+    不预测市场走势，只计算当前回撤状态和预警级别。
+mcp_servers:
+  - server: restricted
+    tools_allowed:
+      - query_portfolio_nav_series
+output_schema:
+  type: object
+  required: [current_drawdown, mdd_30d, mdd_ytd, alert_level]
+  properties:
+    current_drawdown:
+      type: object
+      properties:
+        pct:          { type: number }
+        start_date:   { type: string }
+        peak_nav:     { type: number }
+        current_nav:  { type: number }
+        duration_days: { type: integer }
+    mdd_30d:
+      type: number
+    mdd_ytd:
+      type: number
+    alert_level:
+      type: string
+      enum: [green, yellow, red, stop_loss]
+      # green: MDD<5%; yellow: 5-8%; red: 8-12%; stop_loss: >12%
+    recovering:
+      type: boolean
