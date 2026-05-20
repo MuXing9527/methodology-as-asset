@@ -32,6 +32,9 @@ methodology-as-asset/
 │   │   ├── ipo.md                             # Ch22 IPO 速读入口
 │   │   ├── macro.md                           # Ch23 宏观数据点评入口
 │   │   ├── policy.md                          # Ch23 政策文件解读入口
+│   │   ├── rates.md                           # Ch23 利率债曲线晨报/周报入口
+│   │   ├── creditbond.md                      # Ch23 信用债主体/个券分析入口
+│   │   ├── convertible.md                     # Ch23 可转债个券/池子分析入口
 │   │   ├── event.md                           # Ch24 事件快评入口
 │   │   ├── debate.md                          # Ch25 投委会预演入口
 │   │   ├── earningspreview.md                 # Ch26 财报预览入口
@@ -64,6 +67,9 @@ methodology-as-asset/
 │   │   ├── ipo-quick-read-cn/SKILL.md         # Ch22
 │   │   ├── macro-release-analyzer/SKILL.md    # Ch23
 │   │   ├── policy-doc-analyzer/SKILL.md       # Ch23
+│   │   ├── rates-curve-brief/SKILL.md         # Ch23 利率债曲线
+│   │   ├── credit-bond-analyzer/SKILL.md      # Ch23 信用债
+│   │   ├── convertible-bond-analyzer/SKILL.md # Ch23 可转债
 │   │   ├── event-quick-comment/SKILL.md       # Ch24
 │   │   ├── thesis-debate/SKILL.md             # Ch25
 │   │   ├── earnings-preview/SKILL.md          # Ch26
@@ -102,6 +108,9 @@ methodology-as-asset/
 │   │   ├── ipo-financials-reader.yaml         # Ch22 财务三年数据
 │   │   ├── cn-macro-release-reader.yaml       # Ch23 数据发布对比
 │   │   ├── cn-policy-document-reader.yaml     # Ch23 政策措辞 diff
+│   │   ├── cn-rates-curve-reader.yaml         # Ch23 利率债市场数据
+│   │   ├── cn-credit-issuer-reader.yaml       # Ch23 信用债主体/债项抽取
+│   │   ├── cn-convertible-bond-reader.yaml    # Ch23 可转债指标/条款抽取
 │   │   ├── event-classifier.yaml              # Ch24 classifier（haiku）
 │   │   ├── fed-event-reader.yaml              # Ch24 FOMC reader 示例
 │   │   ├── bull-case-agent.yaml               # Ch25 多头立场

@@ -1,0 +1,80 @@
+name: cn-rates-curve-reader
+version: 0.1.0
+model: claude-sonnet-4-6
+system:
+  text: |
+    你接收受信 MCP 返回的中国利率债市场数据。
+    任务：整理收益率、曲线、资金、供给、成交和机构行为数据。
+    规则：
+    - 只返回结构化 JSON，不输出投资建议
+    - 缺失字段填 null
+    - 不根据单一指标推导利率方向
+
+tools:
+  - type: agent_toolset_20260401
+    default_config: { enabled: false }
+    configs:
+      - { name: mcp, enabled: true }
+
+mcp_servers:
+  - name: rates_cn
+
+output_schema:
+  type: object
+  required: [date, yields, curve_spreads, funding, supply]
+  additionalProperties: false
+  properties:
+    date:
+      type: string
+      maxLength: 20
+    yields:
+      type: object
+      additionalProperties: false
+      properties:
+        cgb_1y: { type: ["number", "null"] }
+        cgb_3y: { type: ["number", "null"] }
+        cgb_5y: { type: ["number", "null"] }
+        cgb_10y: { type: ["number", "null"] }
+        cgb_30y: { type: ["number", "null"] }
+        cdb_10y: { type: ["number", "null"] }
+    curve_spreads:
+      type: object
+      additionalProperties: false
+      properties:
+        cgb_10y_1y: { type: ["number", "null"] }
+        cgb_30y_10y: { type: ["number", "null"] }
+        cgb_10y_dr007: { type: ["number", "null"] }
+    funding:
+      type: object
+      additionalProperties: false
+      properties:
+        dr007: { type: ["number", "null"] }
+        r007: { type: ["number", "null"] }
+        omo_net_injection: { type: ["number", "null"] }
+        tax_payment_pressure:
+          type: ["string", "null"]
+          enum: [high, moderate, low, null]
+    supply:
+      type: object
+      additionalProperties: false
+      properties:
+        gov_bond_net_financing: { type: ["number", "null"] }
+        local_gov_bond_issuance: { type: ["number", "null"] }
+        special_bond_progress: { type: ["number", "null"] }
+    investor_flow:
+      type: array
+      maxItems: 8
+      items:
+        type: object
+        required: [investor_type, direction]
+        additionalProperties: false
+        properties:
+          investor_type:
+            type: string
+            maxLength: 40
+          direction:
+            type: string
+            enum: [net_buy, net_sell, neutral, unknown]
+          tenor:
+            type: ["string", "null"]
+            maxLength: 20
